@@ -76,9 +76,9 @@ namespace CIWebAPI.Controllers
 
         [HttpGet]
         [Route("getMissionData")]
-        public async Task<IActionResult> getMissionData(int pageIndex, int pageSize)
+        public async Task<IActionResult> getMissionData(int pageIndex, int pageSize, string? filterValue)
         {
-            return Ok(await _adminRepository.GetMissionData(pageIndex, pageSize));
+            return Ok(await _adminRepository.GetMissionData(pageIndex, pageSize, filterValue));
         }
 
         [HttpDelete]

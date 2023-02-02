@@ -12181,11 +12181,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CIWebAPI\\CIWebAPI.csproj",
+      "projectUniqueName": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CIWebAPI\\CIWebAPI.csproj",
       "projectName": "CIWebAPI",
-      "projectPath": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CIWebAPI\\CIWebAPI.csproj",
+      "projectPath": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CIWebAPI\\CIWebAPI.csproj",
       "packagesPath": "C:\\Users\\pci145\\.nuget\\packages\\",
-      "outputPath": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CIWebAPI\\obj\\",
+      "outputPath": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CIWebAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12205,8 +12205,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CI.Data\\CI.Data.csproj": {
-              "projectPath": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CI.Data\\CI.Data.csproj"
+            "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CI.Data\\CI.Data.csproj": {
+              "projectPath": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CI.Data\\CI.Data.csproj"
             }
           }
         }

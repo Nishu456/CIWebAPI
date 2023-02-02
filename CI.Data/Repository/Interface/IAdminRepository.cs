@@ -24,7 +24,7 @@ namespace CI.Data.Repository.Interface
 
         Task<MissionRequestModel> postMissionData(MissionRequestModel mission, int? id);
 
-        Task<ViewMissionResponse> GetMissionData(int pageIndex, int pageSize);
+        Task<ViewMissionResponse> GetMissionData(int pageIndex, int pageSize, string? filterValue);
 
         Task<MissionModel> deleteMission(int? id);
 

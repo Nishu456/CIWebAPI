@@ -300,25 +300,54 @@ namespace CI.Data.Repository
             return missionreq;
         }
 
-        public async Task<ViewMissionResponse> GetMissionData(int pageIndex, int pageSize)
+        public async Task<ViewMissionResponse> GetMissionData(int pageIndex, int pageSize, string? filterValue)
         {
-            List<MissionResponseModel> missionList = (from mission in _cIDB.Missions
-                                               select new MissionResponseModel()
-                                               {
-                                                   MissionId = mission.MissionId,
-                                                   MissionTitle = mission.MissionTitle,
-                                                   MissionType = mission.MissionType,
-                                                   StartDate = mission.StartDate,
-                                                   EndDate = mission.EndDate
-                                               }).Skip(pageIndex * pageSize).Take(pageSize).ToList();
+            List<MissionResponseModel> missionList = new List<MissionResponseModel>();
+            int totalRecords = 0;
 
+            if(!string.IsNullOrEmpty(filterValue))
+            {
+                missionList = (from mission in _cIDB.Missions
+                               where mission.MissionTitle.ToLower().Contains(filterValue.ToLower())
+                               || mission.MissionType.ToLower().Contains(filterValue.ToLower())
+                               || mission.StartDate.ToString().Contains(filterValue)
+                               || mission.EndDate.ToString().Contains(filterValue)
+                               select new MissionResponseModel()
+                               {
+                                   MissionId = mission.MissionId,
+                                   MissionTitle = mission.MissionTitle,
+                                   MissionType = mission.MissionType,
+                                   StartDate = mission.StartDate,
+                                   EndDate = mission.EndDate
+                               }).Skip(pageIndex * pageSize).Take(pageSize).ToList();
+
+                string t = _cIDB.Missions.Select(mission => mission.StartDate.ToString()).FirstOrDefault();
+
+                totalRecords = _cIDB.Missions.Where(x => x.MissionTitle.ToLower().Contains(filterValue.ToLower()) ||
+                                    x.MissionType.ToLower().Contains(filterValue.ToLower()) || x.StartDate.ToString().Contains(filterValue)
+                                    || x.EndDate.ToString().Contains(filterValue)).Count();
+            }
+            else
+            {
+                missionList = (from mission in _cIDB.Missions
+                               select new MissionResponseModel()
+                               {
+                                   MissionId = mission.MissionId,
+                                   MissionTitle = mission.MissionTitle,
+                                   MissionType = mission.MissionType,
+                                   StartDate = mission.StartDate,
+                                   EndDate = mission.EndDate
+                               }).Skip(pageIndex * pageSize).Take(pageSize).ToList();
+
+                totalRecords = _cIDB.Missions.Count();
+            }
 
             //List<MissionResponseModel> missionList = _mapper.Map<List<MissionResponseModel>>(
             //    _cIDB.Missions.Skip((pageIndex - 1) * pageSize).Take(pageSize));
 
             ViewMissionResponse missionres = new ViewMissionResponse();
             missionres.Missions = missionList;
-            missionres.totalRecords = _cIDB.Missions.Count();
+            missionres.totalRecords = totalRecords;
             return missionres;
             //int total = userRes.Count;
             //userRes 

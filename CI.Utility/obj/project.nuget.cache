@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ein9Xi4eYORCrLvARZibi42Q3Zv9mVnPJEV5ZorDtme4vdaDCcaM2DBX73Td/2ZFikgT5cyB6ArtQh1ovZ8/cQ==",
+  "dgSpecHash": "TAKyhZlf7vFpl3bNqthAwGE8q8mb+k2IbGmgwHR4lh+HLDZvfCFS4Qeaya2lqalXefZ9tqdXrnMUjATv6Sv7Jg==",
   "success": true,
-  "projectFilePath": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CI.Utility\\CI.Utility.csproj",
+  "projectFilePath": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CI.Utility\\CI.Utility.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pci145\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\pci145\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",

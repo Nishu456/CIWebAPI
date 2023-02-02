@@ -11717,11 +11717,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CI.Models\\CI.Models.csproj",
+      "projectUniqueName": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CI.Models\\CI.Models.csproj",
       "projectName": "CI.Models",
-      "projectPath": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CI.Models\\CI.Models.csproj",
+      "projectPath": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CI.Models\\CI.Models.csproj",
       "packagesPath": "C:\\Users\\pci145\\.nuget\\packages\\",
-      "outputPath": "D:\\Nisha Chavda\\Demo Projects\\CIWebAPI\\CI.Models\\obj\\",
+      "outputPath": "D:\\Nisha Chavda\\Demo Projects\\.NetCoreDemoWebAPI\\CIWebAPI\\CI.Models\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
