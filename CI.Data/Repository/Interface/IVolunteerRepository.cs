@@ -9,6 +9,6 @@ namespace CI.Data.Repository.Interface
 {
     public interface IVolunteerRepository
     {
-        Task<VolunteerMissionVM> MissionList(int pageIndex, int pageSize);
+        Task<VolunteerMissionVM> MissionList(int pageIndex, int pageSize, string? filters);
     }
 }

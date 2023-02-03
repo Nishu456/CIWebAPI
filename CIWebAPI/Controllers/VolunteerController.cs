@@ -19,9 +19,9 @@ namespace CIWebAPI.Controllers
 
         [HttpGet]
         [Route("volunteerMission")]
-        public async Task<IActionResult> volunteerMission(int pageIndex, int pageSize)
+        public async Task<IActionResult> volunteerMission(int pageIndex, int pageSize, string? filterValues)
         {
-            return Ok(await _volunteer.MissionList(pageIndex, pageSize));
+            return Ok(await _volunteer.MissionList(pageIndex, pageSize, filterValues));
         }
     }
 }
