@@ -26,21 +26,10 @@ namespace CI.Data.Repository
             _config = config;
         }
 
-        public async Task<VolunteerMissionVM> MissionList(int pageIndex, int pageSize, string? filters)
+        public async Task<VolunteerMissionVM> MissionList(int pageIndex, int pageSize, string? filters, string? orderBy, string currentUser)
         {
             List<VolnteerMissionModel> volnteerMission = new List<VolnteerMissionModel>();
-            int totalCount = 0;
-            DataTable filterdt = new DataTable();
-            filterdt.Columns.Add("Filter", typeof(string));
-            List<string> filterValues = new List<string>();
-
-            if (!string.IsNullOrEmpty(filters))
-            {
-                foreach (string filter in filters.Split(',', StringSplitOptions.TrimEntries).ToList<string>())
-                {
-                    filterdt.Rows.Add(filter.ToLower());
-                }
-            }                
+            int totalCount = 0;                          
 
             if (!string.IsNullOrEmpty(filters))
             {
@@ -121,6 +110,7 @@ namespace CI.Data.Repository
                 totalCount = await _cIDB.Missions.CountAsync();
             }
 
+
             List<string> countrylst = await (from mission in _cIDB.Missions
                                           join country in _cIDB.Countries on mission.CountryId equals country.CountryId
                                           select country.CountryName).Distinct().ToListAsync();
@@ -138,18 +128,52 @@ namespace CI.Data.Repository
 
             List<string> skilllst = new List<string>();
 
+            int UserId = await _cIDB.Users.Where(x => x.Email == currentUser).Select(x => x.UserId).FirstOrDefaultAsync();
+            string missionIds = await (from fav in _cIDB.FavMissions where fav.UserId == 
+                                UserId select fav.MissionId).FirstOrDefaultAsync();
+
             foreach (string s in tempskilll)
             {
                 if (s.Contains(','))
                 {
-                    foreach(string str in s.Split(','))
+                    foreach (string str in s.Split(','))
                         skilllst.Add(str);
                 }
                 else
                     skilllst.Add(s);
             }
 
-            skilllst = skilllst.Distinct().ToList();            
+            skilllst = skilllst.Distinct().ToList();
+
+            List<int> favMissions = missionIds.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList<int>();            
+
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                if (orderBy == "Newest")
+                {
+                    volnteerMission = volnteerMission.OrderBy(x => x.MissionId).ToList<VolnteerMissionModel>();
+                }
+                else if (orderBy == "Oldest")
+                {
+                    volnteerMission = volnteerMission.OrderByDescending(x => x.MissionId).ToList<VolnteerMissionModel>();
+                }
+                else if (orderBy == "Lowest available seats")
+                {
+                    volnteerMission = volnteerMission.OrderByDescending(x => x.TotalSeats).ToList<VolnteerMissionModel>();
+                }
+                else if (orderBy == "Highest available seats")
+                {
+                    volnteerMission = volnteerMission.OrderBy(x => x.TotalSeats).ToList<VolnteerMissionModel>();
+                }
+                else if (orderBy == "My favourites")
+                {
+                    volnteerMission = volnteerMission.OrderBy(x => favMissions.Contains(x.MissionId) ? 0 : 1).ToList<VolnteerMissionModel>();
+                }
+                else if (orderBy == "Registration deadline")
+                {
+                    volnteerMission = volnteerMission.OrderBy(x => x.RegistrationDeadline).ToList<VolnteerMissionModel>();
+                }
+            }
 
             VolunteerMissionVM volunteerMissionVM = new VolunteerMissionVM()
             {
@@ -158,10 +182,83 @@ namespace CI.Data.Repository
                 city = citylst,
                 themes = themelst,
                 skills = skilllst,
-                totalCount = totalCount
+                totalCount = totalCount,
+                favMissions = favMissions
             };
 
             return volunteerMissionVM;
+        }
+
+        public async Task<FavMissionModel> UpsertFavoriteMissions(string email, int MissionId)
+        {
+            FavMissionModel favMission = new FavMissionModel();
+            int UserId = await _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefaultAsync();
+
+            if (UserId != 0)
+            {
+                var records = await  _cIDB.FavMissions.Where(x => x.UserId == UserId)
+                                   .FirstOrDefaultAsync();
+
+                if (records == null)
+                {
+                    favMission.UserId = UserId;
+                    favMission.MissionId = MissionId.ToString();
+                    favMission.CreatedBy = email;
+                    favMission.CreatedDate = DateTime.Now;
+                    await _cIDB.AddAsync(favMission);
+                    await _cIDB.SaveChangesAsync();
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(records.MissionId))
+                    {
+                        records.MissionId = MissionId.ToString();
+                        records.ModifiedBy = email;
+                        records.ModifiedDate = DateTime.Now;
+                        _cIDB.Update(records);
+                        await _cIDB.SaveChangesAsync();
+                    }
+                    else if (!records.MissionId.Contains(MissionId.ToString()))
+                    {                        
+                        records.MissionId = records.MissionId + ", " + MissionId.ToString();
+                        records.ModifiedBy = email;
+                        records.ModifiedDate = DateTime.Now;
+                        _cIDB.Update(records);
+                        await _cIDB.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return favMission;
+        }
+
+        public async Task<FavMissionModel> RemoveFavoriteMissions(string email, int MissionId)
+        {
+            FavMissionModel favMission = new FavMissionModel();
+            int UserId = await _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefaultAsync();
+
+            if (UserId != 0)
+            {
+                var records = await _cIDB.FavMissions.Where(x => x.UserId == UserId)
+                                   .FirstOrDefaultAsync();
+
+                if (records != null)
+                {
+                    if (records.MissionId.Contains(MissionId.ToString()))
+                    {
+                       
+                        var missionIds = records.MissionId.Split(',', StringSplitOptions.TrimEntries).Select(int.Parse).ToList<int>();
+                        missionIds.Remove(MissionId);
+                        records.MissionId = String.Join(",", missionIds);
+                        records.ModifiedBy = email;
+                        records.ModifiedDate = DateTime.Now;
+                        _cIDB.Update(records);
+                        await _cIDB.SaveChangesAsync();
+                    }
+                }
+            }
+
+            return favMission;
         }
     }
 }

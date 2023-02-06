@@ -65,7 +65,7 @@ namespace CI.Data.Repository
             //};
             var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.Email, login.Email));
-            claims.Add(new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName));
+            claims.Add(new Claim(ClaimTypes.Name, user.UserName));
             claims.Add(new Claim(ClaimTypes.Role, role[0]));
 
             // Add roles as multiple claims

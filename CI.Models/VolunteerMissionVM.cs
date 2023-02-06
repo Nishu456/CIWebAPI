@@ -19,5 +19,7 @@ namespace CI.Models
         public List<string> skills { get; set; }
 
         public int totalCount { get; set; }
+
+        public List<int> favMissions { get; set; }
     }
 }
