@@ -23,9 +23,7 @@ D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\bin\Debug\net6
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\bin\Debug\net6.0\ref\CI.Data.dll
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\bin\Debug\net6.0\CI.Data.pdb
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\bin\Debug\net6.0\CI.Models.dll
-D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\bin\Debug\net6.0\CI.Utility.dll
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\bin\Debug\net6.0\CI.Models.pdb
-D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\bin\Debug\net6.0\CI.Utility.pdb
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\obj\Debug\net6.0\CI.Data.csproj.AssemblyReference.cache
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\obj\Debug\net6.0\CI.Data.GeneratedMSBuildEditorConfig.editorconfig
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Data\obj\Debug\net6.0\CI.Data.AssemblyInfoInputs.cache

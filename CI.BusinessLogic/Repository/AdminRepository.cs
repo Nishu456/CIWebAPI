@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CI.Data.Repository.Interface;
 using CI.Models;
 using CI.Utility;
 using Dapper;
@@ -15,8 +14,10 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using CI.BusinessLogic.Repository.Interface;
+using CI.Data;
 
-namespace CI.Data.Repository
+namespace CI.BusinessLogic.Repository
 {
     public class AdminRepository: IAdminRepository 
     {
@@ -337,7 +338,7 @@ namespace CI.Data.Repository
                                    MissionType = mission.MissionType,
                                    StartDate = mission.StartDate,
                                    EndDate = mission.EndDate
-                               }).Skip(pageIndex * pageSize).Take(pageSize).ToList();
+                               }).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
 
                 totalRecords = _cIDB.Missions.Count();
             }

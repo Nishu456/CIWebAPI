@@ -1,7 +1,8 @@
+using CI.BusinessLogic.Repository;
+using CI.BusinessLogic.Repository.Interface;
 using CI.Data;
-using CI.Data.Repository;
-using CI.Data.Repository.Interface;
 using CI.Models;
+using CI.Utility.Filter;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
     };
 });
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers(options => options.Filters.Add<ExceptionLogFilter>()).AddNewtonsoftJson();
 builder.Services.AddTransient<IAccountRepository, AccountRepository>();
 builder.Services.AddTransient<IAdminRepository, AdminRepository>();
 builder.Services.AddTransient<IVolunteerRepository, VolunteerRepository>();

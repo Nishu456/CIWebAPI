@@ -1,4 +1,4 @@
-﻿using CI.Data.Repository.Interface;
+﻿using CI.BusinessLogic.Repository.Interface;
 using CI.Models;
 using CI.Utility;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CI.Data.Repository
+namespace CI.BusinessLogic.Repository
 {
     public class AccountRepository: IAccountRepository
     {

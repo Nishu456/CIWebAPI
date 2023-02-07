@@ -588,3 +588,5 @@ D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CIWebAPI\obj\Debug\net
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CIWebAPI\obj\Debug\net6.0\ref\CIWebAPI.dll
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CIWebAPI\obj\Debug\net6.0\CIWebAPI.pdb
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CIWebAPI\obj\Debug\net6.0\CIWebAPI.genruntimeconfig.cache
+D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CIWebAPI\bin\Debug\net6.0\CI.BusinessLogic.dll
+D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CIWebAPI\bin\Debug\net6.0\CI.BusinessLogic.pdb

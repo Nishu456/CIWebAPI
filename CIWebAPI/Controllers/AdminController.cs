@@ -1,7 +1,7 @@
-﻿using CI.Data.Repository;
-using CI.Data.Repository.Interface;
+﻿using CI.BusinessLogic.Repository.Interface;
 using CI.Models;
 using CI.Utility;
+using CI.Utility.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +12,7 @@ namespace CIWebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Admin")]
+    [HttpResponseExceptionFilter]
     public class AdminController : ControllerBase
     {
         private readonly IAdminRepository _adminRepository;

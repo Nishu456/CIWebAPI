@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CI.Data.Repository.Interface
+namespace CI.BusinessLogic.Repository.Interface
 {
     public interface IAdminRepository
     {

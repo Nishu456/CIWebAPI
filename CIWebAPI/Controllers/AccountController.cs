@@ -1,5 +1,6 @@
-﻿using CI.Data.Repository.Interface;
+﻿using CI.BusinessLogic.Repository.Interface;
 using CI.Models;
+using CI.Utility.Filter;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ namespace CIWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [HttpResponseExceptionFilter]
     public class AccountController : ControllerBase
     {
         private readonly IAccountRepository _accountRepository;
@@ -34,6 +36,10 @@ namespace CIWebAPI.Controllers
             if(result.Succeeded)
             {
                 return Ok(register);
+            }
+            else
+            {
+                return BadRequest(result);
             }
 
             return Unauthorized();

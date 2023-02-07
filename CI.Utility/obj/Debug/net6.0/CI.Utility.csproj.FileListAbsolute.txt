@@ -28,3 +28,7 @@ D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\obj\Debug\n
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\obj\Debug\net6.0\CI.Utility.dll
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\obj\Debug\net6.0\ref\CI.Utility.dll
 D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\obj\Debug\net6.0\CI.Utility.pdb
+D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\bin\Debug\net6.0\CI.Utility.runtimeconfig.json
+D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\obj\Debug\net6.0\CI.Utility.genruntimeconfig.cache
+D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\bin\Debug\net6.0\CI.Data.dll
+D:\Nisha Chavda\Demo Projects\.NetCoreDemoWebAPI\CIWebAPI\CI.Utility\bin\Debug\net6.0\CI.Data.pdb
