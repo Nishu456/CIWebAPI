@@ -158,7 +158,7 @@ namespace CI.BusinessLogic.Repository
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(records.MissionId))
+                    if (string.IsNullOrEmpty(records.MissionId))
                     {
                         records.MissionId = MissionId.ToString();
                         records.ModifiedBy = email;
