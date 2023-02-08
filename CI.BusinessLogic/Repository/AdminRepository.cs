@@ -338,7 +338,7 @@ namespace CI.BusinessLogic.Repository
                                    MissionType = mission.MissionType,
                                    StartDate = mission.StartDate,
                                    EndDate = mission.EndDate
-                               }).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                               }).Skip((pageIndex) * pageSize).Take(pageSize).ToList();
 
                 totalRecords = _cIDB.Missions.Count();
             }

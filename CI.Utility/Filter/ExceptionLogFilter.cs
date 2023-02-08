@@ -21,14 +21,17 @@ namespace CI.Utility.Filter
         {
             var db = context.HttpContext.RequestServices.GetService<CIDBContext>();
             ExceptionModel exception = new ExceptionModel();
-            exception.ExceptionMessage = context.Exception.Message;
+            exception.ExceptionMessage = string.IsNullOrEmpty(context.Exception.InnerException.ToString()) ? context.Exception.Message : context.Exception.InnerException.Message;
             exception.StackTrace = context.Exception.StackTrace;
             exception.ControllerName = context.RouteData.Values["controller"].ToString();
             exception.ActionName = context.RouteData.Values["action"].ToString();
             exception.DateofException = DateTime.Now;
             exception.UserName = context.HttpContext.User.Identity.Name;
+            //db.Connection.Close();
+            //db.Connection.Open();
+            db.ChangeTracker.Clear();
             db.Exceptions.Add(exception);
-            db.SaveChanges();
+            db.SaveChanges();            
             context.Result = new BadRequestResult();
             context.ExceptionHandled = true;
             base.OnException(context);
