@@ -18,6 +18,8 @@ namespace CI.Models
 
         public string MissionType { get; set; }
 
+        public string MissionTypeData { get; set; }
+
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
@@ -34,14 +36,16 @@ namespace CI.Models
 
         public string OrganizationDetail { get; set; }
 
-        public int TotalSeats { get; set; }
+        public int? TotalSeats { get; set; }
 
-        public DateTime RegistrationDeadline { get; set; }  
+        public DateTime? RegistrationDeadline { get; set; }  
 
         public string Availability { get; set; }
 
         public List<string> Images { get; set; }
 
         public List<string> Documnets { get; set; }
+
+        public string? GoalObjective { get; set; }
     }
 }

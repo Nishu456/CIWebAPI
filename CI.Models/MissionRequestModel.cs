@@ -25,15 +25,17 @@ namespace CI.Models
         public string OrganizationDetail { get; set; }
 
         [DataType(DataType.Date)]
+        [Required]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]
+        [Required]
         public DateTime EndDate { get; set; }
 
-        public int TotalSeats { get; set; }
+        public int? TotalSeats { get; set; }
 
         [DataType(DataType.Date)]
-        public DateTime RegistrationDeadline { get; set; }
+        public DateTime? RegistrationDeadline { get; set; }
 
         [Required]
         public int CountryId { get; set; }
@@ -59,6 +61,6 @@ namespace CI.Models
         [Required]
         public string MissionType { get; set; }
 
-        public int GoalObjective { get; set; }
+        public string? GoalObjective { get; set; }
     }
 }

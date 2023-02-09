@@ -25,7 +25,12 @@
       "ProjectGuid": "c28a38da-9401-4aff-8f47-6dcf893488e1",
       "DisplayName": "CI.Utility",
       "ColorIndex": 3
+    },
+    "2919d5f3-cd97-4ca4-91c6-7b134393a6b0": {
+      "ProjectGuid": "2919d5f3-cd97-4ca4-91c6-7b134393a6b0",
+      "DisplayName": "CI.BusinessLogic",
+      "ColorIndex": 4
     }
   },
-  "NextColorIndex": 4
+  "NextColorIndex": 5
 }

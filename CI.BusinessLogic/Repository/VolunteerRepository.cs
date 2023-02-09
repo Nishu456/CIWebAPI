@@ -57,7 +57,6 @@ namespace CI.BusinessLogic.Repository
             using (var connection = _cIDB.CreateConnection())
             using (var reader = await connection.ExecuteReaderAsync(spName, parameters, commandType: CommandType.StoredProcedure))
             {
-                var readparser = reader.GetRowParser<int>();
                 while (reader.Read())
                 {
                     VolnteerMissionModel vm = new VolnteerMissionModel()
@@ -68,17 +67,19 @@ namespace CI.BusinessLogic.Repository
                         MissionType = reader["MissionType"].ToString(),
                         Theme = reader["ThemeName"].ToString(),
                         Skills = reader["Skills"].ToString(),
+                        MissionTypeData = reader["MissionTypeData"].ToString(),
                         StartDate = Convert.ToDateTime(reader["StartDate"]),
                         EndDate = Convert.ToDateTime(reader["EndDate"]),
                         OrganizationName = reader["OrganizationName"].ToString(),
                         OrganizationDetail = reader["OrganizationDetail"].ToString(),
                         City = reader["CityName"].ToString(),
                         Country = reader["CountryName"].ToString(),
-                        TotalSeats = Convert.ToInt32(reader["TotalSeats"]),
-                        RegistrationDeadline = Convert.ToDateTime(reader["RegistrationDeadline"]),
+                        TotalSeats = reader["TotalSeats"] != DBNull.Value ? Convert.ToInt32(reader["TotalSeats"]) : null,
+                        RegistrationDeadline = reader["RegistrationDeadline"] != DBNull.Value ? Convert.ToDateTime(reader["RegistrationDeadline"]) : null,
                         Availability = reader["Availability"].ToString(),
                         Images = new Base64strConversion(_config).convertToBase64(reader["Images"].ToString(), "images", "Mission"),
-                        Documnets = new Base64strConversion(_config).convertToBase64(reader["Documents"].ToString(), "docs", "Mission")
+                        Documnets = new Base64strConversion(_config).convertToBase64(reader["Documents"].ToString(), "docs", "Mission"),
+                        GoalObjective = reader["GoalObjective"].ToString()
                     };
 
                     volnteerMission.Add(vm);

@@ -20,8 +20,8 @@ namespace CI.Models
         public string OrganizationDetail { get; set;}
         public DateTime StartDate { get; set;}
         public DateTime EndDate { get; set;}
-        public int TotalSeats { get; set;}
-        public DateTime RegistrationDeadline { get; set;}
+        public int? TotalSeats { get; set;}
+        public DateTime? RegistrationDeadline { get; set;}
         public int CountryId { get; set;}
         public int CityId { get; set;}
         public int ThemeId { get; set;}
@@ -38,6 +38,6 @@ namespace CI.Models
         [ValidateNever]
         public string? ModifiedBy { get; set;}
         public string MissionType { get; set;}
-        public int GoalObjective { get; set;}
+        public string? GoalObjective { get; set;}
     }
 }

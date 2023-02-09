@@ -21,7 +21,7 @@ namespace CI.Utility.Filter
         {
             var db = context.HttpContext.RequestServices.GetService<CIDBContext>();
             ExceptionModel exception = new ExceptionModel();
-            exception.ExceptionMessage = string.IsNullOrEmpty(context.Exception.InnerException.ToString()) ? context.Exception.Message : context.Exception.InnerException.Message;
+            exception.ExceptionMessage = (context.Exception.InnerException == null) ? context.Exception.Message : context.Exception.InnerException.Message;
             exception.StackTrace = context.Exception.StackTrace;
             exception.ControllerName = context.RouteData.Values["controller"].ToString();
             exception.ActionName = context.RouteData.Values["action"].ToString();
