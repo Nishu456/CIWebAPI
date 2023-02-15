@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using CI.BusinessLogic.Repository.Interface;
 using CI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CI.BusinessLogic.Repository
 {
@@ -487,6 +488,38 @@ namespace CI.BusinessLogic.Repository
             }
 
             return missionSkill;
+        }
+
+        public async Task<List<MissionVolunteeringResponse>> getMissionVoluneer()
+        {
+            List<MissionVolunteeringResponse> missionVolunteeringList = await (from missionVolunteer in _cIDB.MissionVolunteering
+                                                                               join user in _cIDB.Users on missionVolunteer.UserId equals user.UserId
+                                                                               join mission in _cIDB.Missions on missionVolunteer.MissionId equals mission.MissionId
+                                                                               select new MissionVolunteeringResponse()
+                                                                               {
+                                                                                   VolunteerId = missionVolunteer.VolunteerId,
+                                                                                   MissionTitle = mission.MissionTitle,
+                                                                                   MissionId = missionVolunteer.MissionId,
+                                                                                   UserId = missionVolunteer.UserId,
+                                                                                   UserName = user.FirstName + " " + user.LastName,
+                                                                                   AppliedDate = missionVolunteer.CreatedDate
+                                                                               }).ToListAsync();
+
+            return missionVolunteeringList;
+        }
+
+        public async Task<MissionVolunteeringModel> updateMissionVolunteer(MissionVolunteeringModel missionVolunteering, string email)
+        {
+            MissionVolunteeringModel dbData = _cIDB.MissionVolunteering.Find(missionVolunteering.VolunteerId);
+            if (dbData != null)
+            {
+                dbData.Action = missionVolunteering.Action;
+                dbData.ModifiedBy = email;
+                dbData.ModifiedDate = DateTime.Now;
+                _cIDB.Update(dbData);
+                _cIDB.SaveChanges();
+            }
+            return dbData;
         }
     }
 }

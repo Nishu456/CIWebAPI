@@ -228,5 +228,19 @@ namespace CIWebAPI.Controllers
         {
             return Ok(await _adminRepository.deleteMissionSkillById(skillId));
         }
+
+        [HttpGet]
+        [Route("missionApplication")]
+        public async Task<ActionResult> missionApplication()
+        {
+            return Ok(await _adminRepository.getMissionVoluneer());
+        }
+
+        [HttpPost]
+        [Route("updateApplication")]
+        public async Task<IActionResult> updateApplication(MissionVolunteeringModel missionVolunteering)
+        {
+            return Ok(await _adminRepository.updateMissionVolunteer(missionVolunteering, User.Identity.Name));
+        }
     }
 }

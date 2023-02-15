@@ -241,6 +241,54 @@ namespace CI.BusinessLogic.Repository
 
             return missionRecord;
         }
+
+        public async Task<MissionVolunteeringModel> UpsertMissionVolunteer(int MissionId, string email)
+        {
+            MissionVolunteeringModel missionVolunteering = new MissionVolunteeringModel();
+            int UserId = _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefault();
+            missionVolunteering.MissionId = MissionId;
+            missionVolunteering.UserId = UserId;
+            missionVolunteering.Action = "Applied";
+            missionVolunteering.CreatedBy = email;
+            missionVolunteering.CreatedDate = DateTime.Now;
+            await _cIDB.AddAsync(missionVolunteering);
+            await _cIDB.SaveChangesAsync();
+            return missionVolunteering;
+        }
+        public async Task<VolunteerTimeModel> UpsertVolunteerTime(VolunteerTimeModel volunteerTime, string email, int? timeId) {
+            if(timeId != null)
+            {
+                volunteerTime.VolunteerId = Convert.ToInt32(timeId);
+                volunteerTime.ModifiedBy = email;
+                volunteerTime.ModifiedDate = DateTime.Now;
+                _cIDB.volunteerTimes.Update(volunteerTime);
+                _cIDB.SaveChanges();
+            }
+            else
+            {
+                volunteerTime.CreatedBy = email;
+                volunteerTime.CreatedDate = DateTime.Now;
+                await _cIDB.AddAsync(volunteerTime);
+                await _cIDB.SaveChangesAsync();
+            }
+            return volunteerTime;
+        }
+
+        public async Task<VolunteerGoalModel> UpsertVolunteerGoal(VolunteerGoalModel volunteerGoal, string email, int? goalId) { 
+            if(goalId != null)
+            {
+                volunteerGoal.Id = Convert.ToInt32(goalId);
+                volunteerGoal.ModifiedBy = email;
+                volunteerGoal.ModifiedDate = DateTime.Now;
+            }
+            else
+            {
+                volunteerGoal.CreatedBy = email;
+                volunteerGoal.CreatedDate = DateTime.Now;
+            }
+
+            return volunteerGoal;
+        }
     }
 }
 

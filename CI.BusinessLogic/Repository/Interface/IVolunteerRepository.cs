@@ -16,5 +16,11 @@ namespace CI.BusinessLogic.Repository.Interface
         Task<FavMissionModel> RemoveFavoriteMissions(string email, int MissionId);
 
         Task<MissionModel> MissionRating(string email, int MissionId, int Rate);
+
+        Task<MissionVolunteeringModel> UpsertMissionVolunteer(int MissionId, string email);
+
+        Task<VolunteerTimeModel> UpsertVolunteerTime(VolunteerTimeModel volunteerTime, string email, int? timeId);
+
+        Task<VolunteerGoalModel> UpsertVolunteerGoal(VolunteerGoalModel volunteerGoal, string email, int? goalId);
     }
 }

@@ -39,5 +39,9 @@ namespace CI.BusinessLogic.Repository.Interface
         Task<MissionSkillModel> postMissionSkill(MissionSkillModel skill, int? skillId);
 
         Task<MissionSkillModel> deleteMissionSkillById(int SkillId);
+
+        Task<List<MissionVolunteeringResponse>> getMissionVoluneer();
+
+        Task<MissionVolunteeringModel> updateMissionVolunteer(MissionVolunteeringModel missionVolunteering, string email);
     }
 }

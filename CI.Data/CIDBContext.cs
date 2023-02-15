@@ -28,5 +28,8 @@ namespace CI.Data
         public DbSet<FavMissionModel> FavMissions { get; set;}
         public DbSet<ExceptionModel> Exceptions { get; set;}
         public DbSet<MissionRatingModel> MissionRatings { get; set;}
+        public DbSet<VolunteerGoalModel> VolunteerGoal { get; set; }
+        public DbSet<VolunteerTimeModel> volunteerTimes { get; set; }
+        public DbSet<MissionVolunteeringModel> MissionVolunteering { get; set; }
     }
 }

@@ -46,5 +46,26 @@ namespace CIWebAPI.Controllers
             //int missionId = rating[0].missionId
             return Ok(await _volunteer.MissionRating(User.Identity.Name, rating.MissionId, rating.Rate));
         }
+
+        [HttpPost]
+        [Route("missionVolunteering")]
+        public async Task<IActionResult> missionVolunteering([FromBody]int missionId)
+        {
+            return Ok(await _volunteer.UpsertMissionVolunteer(missionId, User.Identity.Name));
+        }
+
+        [HttpPost]
+        [Route("upsertVolunteerTime")]
+        public async Task<IActionResult> upsertVolunteerTime([FromBody]VolunteerTimeModel volunteerTime, int? timeId)
+        {
+            return Ok(await _volunteer.UpsertVolunteerTime(volunteerTime, User.Identity.Name, timeId));
+        }
+
+        [HttpPost]
+        [Route("upsertVolunteerGoal")]
+        public async Task<IActionResult> upsertVolunteerGoal([FromBody]VolunteerGoalModel volunteerGoal, int? goalId)
+        {
+            return Ok(await _volunteer.UpsertVolunteerGoal(volunteerGoal, User.Identity.Name, goalId));
+        }
     }
 }
