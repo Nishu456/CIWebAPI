@@ -1,4 +1,5 @@
 ﻿using CI.BusinessLogic.Repository.Interface;
+using CI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,14 @@ namespace CIWebAPI.Controllers
         public async Task<IActionResult> removeFavMissions(int missionId)
         {
             return Ok(await _volunteer.RemoveFavoriteMissions(User.Identity.Name, missionId));
+        }
+
+        [HttpPost]
+        [Route("missionRating")]
+        public async Task<IActionResult> missionRating([FromBody] MissionRatingModel rating)
+        {
+            //int missionId = rating[0].missionId
+            return Ok(await _volunteer.MissionRating(User.Identity.Name, rating.MissionId, rating.Rate));
         }
     }
 }

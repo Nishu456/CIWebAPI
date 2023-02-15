@@ -63,6 +63,7 @@ namespace CI.BusinessLogic.Repository
                     {
                         MissionId = Convert.ToInt32(reader["MissionId"]),
                         MissionTitle = reader["MissionTitle"].ToString(),
+                        ShortDescription = reader["ShortDescription"].ToString(),
                         MissionDescription = reader["MissionDescription"].ToString(),
                         MissionType = reader["MissionType"].ToString(),
                         Theme = reader["ThemeName"].ToString(),
@@ -79,7 +80,8 @@ namespace CI.BusinessLogic.Repository
                         Availability = reader["Availability"].ToString(),
                         Images = new Base64strConversion(_config).convertToBase64(reader["Images"].ToString(), "images", "Mission"),
                         Documnets = new Base64strConversion(_config).convertToBase64(reader["Documents"].ToString(), "docs", "Mission"),
-                        GoalObjective = reader["GoalObjective"].ToString()
+                        GoalObjective = reader["GoalObjective"].ToString(),
+                        Rate = Convert.ToInt32(reader["Rate"])
                     };
 
                     volnteerMission.Add(vm);
@@ -208,6 +210,36 @@ namespace CI.BusinessLogic.Repository
             }
 
             return favMission;
+        }
+
+        public async Task<MissionModel> MissionRating(string email, int MissionId, int Rate)
+        {
+            MissionRatingModel missionRating = new MissionRatingModel();
+            missionRating.MissionId = MissionId;
+            missionRating.Rate = Rate;
+            missionRating.CreatedBy = email;
+            missionRating.CreatedDate = DateTime.Now;
+            await _cIDB.AddAsync(missionRating);
+            await _cIDB.SaveChangesAsync();
+
+            int rate = Convert.ToInt32(_cIDB.MissionRatings.Where(x => x.MissionId == MissionId).Average(x => x.Rate));
+
+            MissionModel missionRecord = _cIDB.Missions.Find(MissionId);
+
+            if (missionRecord != null)
+            {
+                missionRecord.Rate = rate;
+                _cIDB.Update(missionRecord);
+                _cIDB.SaveChanges();
+
+                missionRecord = await _cIDB.Missions.Where(x => x.MissionId == MissionId).Select(x => new MissionModel()
+                {
+                    MissionId = MissionId,
+                    Rate = rate
+                }).FirstOrDefaultAsync();
+            }
+
+            return missionRecord;
         }
     }
 }

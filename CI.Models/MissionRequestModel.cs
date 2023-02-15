@@ -16,6 +16,9 @@ namespace CI.Models
         public string MissionTitle { get; set; }
 
         [Required]
+        public string ShortDescription { get; set; }
+
+        [Required]
         public string MissionDescription { get; set; }
 
         [Required]

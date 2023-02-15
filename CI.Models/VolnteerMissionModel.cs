@@ -14,6 +14,8 @@ namespace CI.Models
 
         public string MissionTitle { get; set; }
 
+        public string ShortDescription { get; set; }
+
         public string MissionDescription { get; set; }
 
         public string MissionType { get; set; }
@@ -47,5 +49,7 @@ namespace CI.Models
         public List<string> Documnets { get; set; }
 
         public string? GoalObjective { get; set; }
+
+        public int Rate { get; set; }
     }
 }

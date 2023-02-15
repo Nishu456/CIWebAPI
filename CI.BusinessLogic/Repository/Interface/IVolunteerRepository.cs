@@ -14,5 +14,7 @@ namespace CI.BusinessLogic.Repository.Interface
         Task<FavMissionModel> UpsertFavoriteMissions(string email, int MissionId);
 
         Task<FavMissionModel> RemoveFavoriteMissions(string email, int MissionId);
+
+        Task<MissionModel> MissionRating(string email, int MissionId, int Rate);
     }
 }

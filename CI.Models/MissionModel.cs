@@ -39,5 +39,7 @@ namespace CI.Models
         public string? ModifiedBy { get; set;}
         public string MissionType { get; set;}
         public string? GoalObjective { get; set;}
+        public string ShortDescription { get; set;}
+        public int? Rate { get; set;}
     }
 }
