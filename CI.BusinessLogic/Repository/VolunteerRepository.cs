@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net.Mime;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CI.BusinessLogic.Repository
 {
@@ -242,6 +243,32 @@ namespace CI.BusinessLogic.Repository
             return missionRecord;
         }
 
+        public async Task<IEnumerable<SelectListItem>> TimeMissionList(string email)
+        {
+            int userId = _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefault();
+            return (from mission in _cIDB.Missions
+                    join missionVolunteer in _cIDB.MissionVolunteering on mission.MissionId equals missionVolunteer.MissionId
+                    where missionVolunteer.UserId == userId && missionVolunteer.Action == "Accepted" && mission.MissionType == "Time"
+                    select new SelectListItem
+                    {
+                        Text = mission.MissionTitle.ToString(),
+                        Value = mission.MissionId.ToString()
+                    });
+        }
+
+        public async Task<IEnumerable<SelectListItem>> GoalMissionList(string email)
+        {
+            int userId = _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefault();
+            return (from mission in _cIDB.Missions
+                    join missionVolunteer in _cIDB.MissionVolunteering on mission.MissionId equals missionVolunteer.MissionId
+                    where missionVolunteer.UserId == userId && missionVolunteer.Action == "Accepted" && mission.MissionType == "Goal"
+                    select new SelectListItem
+                    {
+                        Text = mission.MissionTitle.ToString(),
+                        Value = mission.MissionId.ToString()
+                    });
+        }
+
         public async Task<MissionVolunteeringModel> UpsertMissionVolunteer(int MissionId, string email)
         {
             MissionVolunteeringModel missionVolunteering = new MissionVolunteeringModel();
@@ -255,8 +282,10 @@ namespace CI.BusinessLogic.Repository
             await _cIDB.SaveChangesAsync();
             return missionVolunteering;
         }
-        public async Task<VolunteerTimeModel> UpsertVolunteerTime(VolunteerTimeModel volunteerTime, string email, int? timeId) {
-            if(timeId != null)
+        public async Task<VolunteerTimeModel> UpsertVolunteerTime(VolunteerTimeModel volunteerTime, string email, int? timeId) 
+        {
+            int UserId = _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefault();
+            if (timeId != null)
             {
                 volunteerTime.VolunteerId = Convert.ToInt32(timeId);
                 volunteerTime.ModifiedBy = email;
@@ -266,6 +295,7 @@ namespace CI.BusinessLogic.Repository
             }
             else
             {
+                volunteerTime.UserId = UserId;  
                 volunteerTime.CreatedBy = email;
                 volunteerTime.CreatedDate = DateTime.Now;
                 await _cIDB.AddAsync(volunteerTime);
@@ -274,20 +304,63 @@ namespace CI.BusinessLogic.Repository
             return volunteerTime;
         }
 
-        public async Task<VolunteerGoalModel> UpsertVolunteerGoal(VolunteerGoalModel volunteerGoal, string email, int? goalId) { 
-            if(goalId != null)
+        public async Task<VolunteerGoalModel> UpsertVolunteerGoal(VolunteerGoalModel volunteerGoal, string email, int? goalId) 
+        {
+            int UserId = _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefault();
+            if (goalId != null)
             {
                 volunteerGoal.Id = Convert.ToInt32(goalId);
                 volunteerGoal.ModifiedBy = email;
                 volunteerGoal.ModifiedDate = DateTime.Now;
+                _cIDB.VolunteerGoal.Update(volunteerGoal);
+                _cIDB.SaveChanges();
             }
             else
             {
+                volunteerGoal.UserId = UserId;
                 volunteerGoal.CreatedBy = email;
                 volunteerGoal.CreatedDate = DateTime.Now;
+                await _cIDB.AddAsync(volunteerGoal);
+                await _cIDB.SaveChangesAsync();
             }
 
             return volunteerGoal;
+        }
+
+        public async Task<VolunteerTimeSheet> getVolunteerTimesheet(string email)
+        {
+            int UserId = _cIDB.Users.Where(x => x.Email == email).Select(x => x.UserId).FirstOrDefault();
+            List<VolunteerTimeResponse> timeResponses = await (from time in _cIDB.volunteerTimes
+                                                    join mission in _cIDB.Missions on time.MissionId equals mission.MissionId
+                                                    where time.UserId == UserId select new VolunteerTimeResponse()
+                                                    {
+                                                        VolunteerId = time.VolunteerId,
+                                                        Mission = mission.MissionTitle,
+                                                        Date = time.Date,
+                                                        Hours = time.Hours.ToString()+"h",
+                                                        Minutes = time.Minutes.ToString()+"m",
+                                                        Message = time.Message 
+                                                    }).ToListAsync();
+
+            List<VolunteerGoalResponse> goalResponses = await (from goal in _cIDB.VolunteerGoal
+                                                               join mission in _cIDB.Missions on goal.MissionId equals mission.MissionId
+                                                               where goal.UserId == UserId
+                                                               select new VolunteerGoalResponse()
+                                                               {
+                                                                   Id = goal.Id,
+                                                                   Mission = mission.MissionTitle,
+                                                                   Date= goal.Date,
+                                                                   Actions = goal.Actions,
+                                                                   Message = goal.Message
+                                                               }).ToListAsync();
+
+            VolunteerTimeSheet timeSheet = new VolunteerTimeSheet()
+            {
+                volunteerTime = timeResponses,
+                volunteerGoal = goalResponses
+            };
+
+            return timeSheet;
         }
     }
 }

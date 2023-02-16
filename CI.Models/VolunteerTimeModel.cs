@@ -23,7 +23,7 @@ namespace CI.Models
 
         public int Minutes { get; set; }
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         public int UserId { get; set; }
 

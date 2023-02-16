@@ -47,6 +47,20 @@ namespace CIWebAPI.Controllers
             return Ok(await _volunteer.MissionRating(User.Identity.Name, rating.MissionId, rating.Rate));
         }
 
+        [HttpGet]
+        [Route("timeMissionList")]
+        public async Task<IActionResult> timeMissionList()
+        {
+            return Ok(await _volunteer.TimeMissionList(User.Identity.Name));    
+        }
+
+        [HttpGet]
+        [Route("goalMissionList")]
+        public async Task<IActionResult> goalMissionList()
+        {
+            return Ok(await _volunteer.GoalMissionList(User.Identity.Name));
+        }
+
         [HttpPost]
         [Route("missionVolunteering")]
         public async Task<IActionResult> missionVolunteering([FromBody]int missionId)
@@ -66,6 +80,13 @@ namespace CIWebAPI.Controllers
         public async Task<IActionResult> upsertVolunteerGoal([FromBody]VolunteerGoalModel volunteerGoal, int? goalId)
         {
             return Ok(await _volunteer.UpsertVolunteerGoal(volunteerGoal, User.Identity.Name, goalId));
+        }
+
+        [HttpGet]
+        [Route("volunteerTimesheet")]
+        public async Task<IActionResult> volunteerTimesheet()
+        {
+            return Ok(await _volunteer.getVolunteerTimesheet(User.Identity.Name));
         }
     }
 }

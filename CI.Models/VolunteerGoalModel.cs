@@ -21,7 +21,7 @@ namespace CI.Models
 
         public DateTime Date { get; set; }
 
-        public string Message { get; set; }
+        public string? Message { get; set; }
 
         public int UserId { get; set; }
 
